@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  rtmp-nginx:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: rtmp-nginx:${TAG}
+    hostname: rtmp-nginx
+    container_name: rtmp-nginx
+    environment:
+      - NGINX_HTTP_PORT=${NGINX_HTTP_PORT}
+      - NGINX_HTTPS_PORT=${NGINX_HTTPS_PORT}
+      - NGINX_RTMP_PORT=${NGINX_RTMP_PORT}
+      - RTMP1_URL=${RTMP1_URL}
+      - RTMP1_KEY=${RTMP1_KEY}
+      - RTMP2_URL=${RTMP2_URL}
+      - RTMP2_KEY=${RTMP2_KEY}
+      - RTMP_PASS=${RTMP_PASS}
+      - NGINX_SERVERNAME=${NGINX_SERVERNAME}
+      - NGINX_ROOT=${NGINX_ROOT}
+      - SSL_CERT_PATH=${SSL_CERT_PATH}
+      - SSL_KEY_PATH=${SSL_KEY_PATH}
+    ports:
+      - "8888:${NGINX_HTTP_PORT}"
+      - "8443:${NGINX_HTTPS_PORT}"
+      - "1935:${NGINX_RTMP_PORT}"
+      - "1936:1936"
+    expose:
+      - "8888"
+      - "8443"
+      - "1935"
+      - "1936"
+    networks:
+      - rtmp-network
+
+networks:
+  rtmp-network:
+    driver: bridge

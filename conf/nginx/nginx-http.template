@@ -1,0 +1,21 @@
+server {
+    listen ${NGINX_HTTP_PORT};
+    listen [::]:${NGINX_HTTP_PORT};
+
+    server_name ${NGINX_SERVERNAME};
+
+    location /auth {
+        if ($arg_pwd = '${RTMP_PASS}') {
+            return 200;
+        }
+            return 401;
+    }
+
+    root ${NGINX_ROOT};
+    index index.php index.html index.htm;
+
+    # Add stdout logging
+    error_log /dev/stdout info;
+    access_log /dev/stdout;
+
+}

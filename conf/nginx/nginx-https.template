@@ -1,0 +1,17 @@
+server {
+    listen ${NGINX_HTTPS_PORT} ssl;
+    listen [::]:${NGINX_HTTPS_PORT};
+
+    ssl_certificate ${SSL_CERT_PATH};
+    ssl_certificate_key ${SSL_KEY_PATH};
+
+    server_name ${NGINX_SERVERNAME};
+
+    root ${NGINX_ROOT};
+    index index.php index.html index.htm;
+
+    # Add stdout logging
+    error_log /dev/stdout info;
+    access_log /dev/stdout;
+
+}
